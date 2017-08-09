@@ -1,0 +1,6 @@
+Single round robin tournament: each team has to play every other team once, either at home or away
+
+Home (H) or Away (A)
+A team has a break in round t if it plays in rounds t and t+1 either two consecutive games at home or two consecutive games away
+Minimize the number of breaks
+Theorem: For a single round robin tournament with n teams (n being even), the min number of breaks is n −  2
