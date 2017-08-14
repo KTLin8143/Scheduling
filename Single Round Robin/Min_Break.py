@@ -22,6 +22,7 @@ try:
     # Set objective
     expr = LinExpr()
     for i in range(0, n):
+        for t in range(0, n - 1):
             expr += z[i][t]
     m.setObjective(expr, GRB.MINIMIZE)
 
