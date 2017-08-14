@@ -1,0 +1,28 @@
+\documentclass[12pt,oneside]{book}
+\usepackage{setspace}
+\usepackage{amsmath}
+
+\doublespacing
+\title{MILP model} 
+\begin{document}
+\begin{center} 
+Mixed-integer linear programming model (MILP)\\
+\begin{tabular}{c c}
+\hline
+$n$ & number of teams\\
+$x_{ijt}$ & 1 if at period $t$ , team $i$ is away to team $j$s home.\\
+$z_{it}$ & 1 if a break occurs at period $t$\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{align}
+\textrm{Minmize} & \sum_{i=1}^{n} \sum_{t=2}^{n-1} z_{it} \\
+\textrm{s.t} & \sum_{i=1}^{n}(x_{ijt}+x_{jit})=1 & \forall j=1,\cdots,n,   t=1,\cdots,n-1; & \\
+ & \sum_{t=1}^{n-1}(x_{ijt}+x_{jit})=1 & \forall i \neq j; \\
+ &  \sum_{j=1}^{n}x_{ijt-1}+\sum_{j=1}^{n}x_{ijt}-z_{it} \leq1 & \forall i=1,\cdots,n, t=2,\cdots,n-1; \\
+  &  \sum_{j=1}^{n}x_{jit-1}+\sum_{j=1}^{n}x_{jit}-z_{it} \leq1 & \forall i=1,\cdots,n, t=2,\cdots,n-1;
+\end{align}
+\hfill{rewrite by Carter  17/8/14}
+
+\end{document}
