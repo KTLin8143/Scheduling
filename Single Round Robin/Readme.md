@@ -1,7 +1,7 @@
 # Minimize the Break of Single Round Robin 
 循環賽制常用於分組賽或聯賽中，參賽者與其它參賽者逐一進行比賽，每兩名參賽者之間只比賽一場的稱為單循環賽。
 一名選手同時在主場或客場連續征戰則有break產生，然而過多的Break會有不公平性產生。
-因此我們使用Gurobi來跑數學模型，to minimize the break of Single Round Robin
+因此我們使用Gurobi來跑數學模型，來最小化break的產生。
 
 ## Getting Started
 
