@@ -3,7 +3,7 @@
 一名選手同時在主場或客場連續征戰則有break產生，然而過多的Break會有不公平性產生。
 因此我們使用Gurobi來跑數學模型，來最小化break的產生。
 
-## Getting Started
+## Problem Definition
 
 主場 (H)  客場 (A)
 Break定義: 一組隊伍連續兩場在主場(H)或客場(A)，進行比賽。
@@ -14,6 +14,7 @@ A team has a break in round t if it plays in rounds t and t+1 either two consecu
 Minimize the number of breaks
 Theorem: For a single round robin tournament with n teams (n being even), the min number of breaks is n ?  2
 
+## Mixed Integer Programming Model
 ![image](https://github.com/KTLin8143/Scheduling/blob/master/Single%20Round%20Robin/Mini%20Break%20Model.PNG)
 
 
