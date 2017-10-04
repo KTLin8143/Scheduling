@@ -26,8 +26,7 @@ Gurobi 7.5.1 and Python(or any other laguage)
 
 ### Installing Gurobi
 
-1. 安裝 Gurobi
-
+安裝 Gurobi
 下載gurobi軟體，並註冊，
 ```
 http://www.gurobi.com/downloads/gurobi-optimizer
