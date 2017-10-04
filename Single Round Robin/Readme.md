@@ -18,11 +18,11 @@ Theorem: For a single round robin tournament with n teams (n being even), the mi
 ![image](https://github.com/KTLin8143/Scheduling/blob/master/Single%20Round%20Robin/Mini%20Break%20Model.PNG)
 
 
-### Prerequisites
+## Prerequisites
 
 Gurobi 7.5.1 and Python(or any other laguage)
 
-### Installing Gurobi
+## Installing Gurobi
 
 1. 安裝 Gurobi
 
