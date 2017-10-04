@@ -5,7 +5,16 @@
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+主場 (H)  客場 (A)
+
+Break定義: 一組隊伍連續兩場在主場(H)或客場(A)，進行比賽。
+最小化break: 對單循環淘汰賽來說，假如有n組隊伍(n為偶數)則，其最小的break數為 n-2。
+
+Home (H) or Away (A)
+A team has a break in round t if it plays in rounds t and t+1 either two consecutive games at home or two consecutive games away
+
+Minimize the number of breaks
+Theorem: For a single round robin tournament with n teams (n being even), the min number of breaks is n ?  2
 
 ### Prerequisites
 
