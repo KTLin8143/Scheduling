@@ -121,7 +121,8 @@ Add constraint
 ```
     m.optimize()
 ```
-## Result
+## Note
 
-the computation time is gr
+The computation time is growth exponential
+When the number of team is 10 is need 500s to get the solution
 
