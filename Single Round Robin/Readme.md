@@ -22,7 +22,9 @@ Theorem: For a single round robin tournament with n teams (n being even), the mi
 
 Gurobi 7.5.1 and Python(or any other laguage)
 
-## Installing Gurobi
+## Getting started 
+
+### Installing Gurobi
 
 1. 安裝 Gurobi
 
@@ -41,58 +43,84 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 >>>
 
 ```
-### Strating
+### Python 
 
-mechanize.Browser() 建立一個 Browser 物件
-set_handle_robots(False)有些網站會要求機器人不能來瀏覽，這邊設成 False 的話就會忽略網站的設定
-br.addheaders 加上 User-Agent 的設定
+Create Gurobi model (m)and variable (x[i][j][t], z[i][t])
 
-```
-br = mechanize.Browser()
-br.set_handle_robots(False)
-br.addheaders = [('User-agent', 'Firefox')]
-```
+``` 
+    m = Model("Min_Break")
+    x = [[[0 for t in range(0, n - 1)] for j in range(0, n)] for i in range(0, n)]
+    z = [[0 for t in range(0, n - 1)] for i in range(0, n)]
+    for i in range(0, n):
+        for j in range(0, n):
+            for t in range(0, n - 1):
+                x[i][j][t] = m.addVar(vtype=GRB.BINARY, name="x")
 
-執行 open() 可以瀏覽你想登入之URL
-這邊以我想登入的學校網站入口為例
+    for i in range(0, n):
+        for t in range(0, n - 1):
+            z[i][t] = m.addVar(vtype=GRB.BINARY, name="z")
 
-```
-br.open('http://e3.nctu.edu.tw/NCTU_EASY_E3P/LMS3/login.aspx?ReturnUrl=/NCTU_Easy_E3P/lms3/enter_course_index.aspx')
-```
-
-在login前，必須讓 mechanize 知道要對哪個表單做事
-這邊就要用 select_form() 這個函式來指定
-nr 代表的是第幾個表單 (從 0 開始)
+    m.update()
 
 ```
-br.select_form(nr=0)
-```
 
-對你的輸入帳號欄位點選右鍵 -->檢查
-就可以看到你所需登入頁的欄位分別為何
-這此我們的網頁所需欄位為: txtAccount、txtPwd
-
+Set objective value
+m.setObjective 設立model的目標(GRB.MINIMIZE為最小化此目標式)
 ```
-<input name="txtAccount" type="text" id="txtAccount" value="Account" style="width:180px;">
-<input name="txtPwd" type="password" id="txtPwd" style="width:180px;">
+    expr = LinExpr()
+    for i in range(0, n):
+        for t in range(0, n - 1):
+            expr += z[i][t]
+    m.setObjective(expr, GRB.MINIMIZE)
 ```
-
-用 br['欄位名稱'] 就可以取得/填入值，然後用 br.submit() 送出表單：
-
-```
-br.form['txtLoginId'] = 'your account'
-br.form['txtLoginPwd'] = 'your pwd'
-sub = br.submit()
-```
-現在已經進入了學校系統
-使用 br.response().get_data() 存的就是進入後網頁的內容
+Add constraint
+建立限制式，以求出解
 
 ```
-print br.response().get_data()
+    # Add constraint 1
+    for j in range(0, n):
+        for t in range(0, n - 1):
+            expr = LinExpr()
+            for i in range(0, n):
+                expr += (x[i][j][t] + x[j][i][t])
+            m.addConstr(expr, GRB.EQUAL, 1)
+
+    # Add constraint 2
+    for i in range(0, n):
+        for j in range(0, n):
+            if i != j:
+                expr = LinExpr()
+                for t in range(0, n - 1):
+                    expr += (x[i][j][t] + x[j][i][t])
+                m.addConstr(expr, GRB.EQUAL, 1)
+
+    # Add constraint 3
+    for i in range(0, n):
+        for t in range(1, n - 1):
+            expr = LinExpr()
+            for j in range(0, n):
+                expr += x[i][j][t - 1]
+            for j in range(0, n):
+                expr += x[i][j][t]
+            expr += -z[i][t]
+            m.addConstr(expr, GRB.LESS_EQUAL, 1)
+
+    # Add constraint 4
+    for i in range(0, n):
+        for t in range(1, n - 1):
+            expr = LinExpr()
+            for j in range(0, n):
+                expr += x[j][i][t - 1]
+            for j in range(0, n):
+                expr += x[j][i][t]
+            expr += -z[i][t]
+            m.addConstr(expr, GRB.LESS_EQUAL, 1)
 ```
 
-目前在研究，如何點選Javasript button with__doPostBack 
+將上述目標式、配合限制式做最佳化 m.optimize()
 
 ```
-href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvCourse$ctl02$lnkCourseName','')"
+    m.optimize()
 ```
+
+
