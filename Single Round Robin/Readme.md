@@ -44,7 +44,7 @@ Please check out: http://continuum.io/thanks and https://anaconda.org
 ```
 ### Python 
 
-Create Gurobi model (m)and variable (x[i][j][t], z[i][t])
+Create Gurobi model and variable
 
 ``` 
     m = Model("Min_Break")
@@ -121,5 +121,7 @@ Add constraint
 ```
     m.optimize()
 ```
+## Result
 
+the computation time is gr
 
